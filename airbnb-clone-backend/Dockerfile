@@ -1,0 +1,12 @@
+
+FROM python:3.8
+
+WORKDIR /src
+
+COPY requirements.txt /src
+
+RUN pip install -r /src/requirements.txt
+
+COPY . .
+
+CMD [ "python3", "app.py"]
