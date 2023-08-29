@@ -24,7 +24,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       className={`
-        realtive disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full 
+        relative disabled:opacity-70 disabled:cursor-not-allowed rounded-lg hover:opacity-80 transition w-full 
         ${outline ? "bg-white" : "bg-rose-500"}
         ${outline ? "border-black" : "bg-rose-500"}
         ${outline ? "text-black" : "text-white"}

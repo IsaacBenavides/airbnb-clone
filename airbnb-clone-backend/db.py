@@ -1,8 +1,5 @@
 import os
 from flask_pymongo import pymongo
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class DbConnection:

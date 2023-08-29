@@ -1,12 +1,13 @@
-from flask import Flask, jsonify
+from conf import app
+from views.users import user_views
+from flask_cors import CORS
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+load_dotenv()
 
 
-@app.route("/")
-def hello_geek():
-    dictToReturn = {"text": "Hola mundo desde flask"}
-    return jsonify(dictToReturn)
+app.register_blueprint(user_views)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import RegisterModal from "./components/Modals/RegisterModal";
 import Navbar from "./components/Navbar/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
+import ToastProvider from "./providers/ToastProvider";
 
 export const metadata: Metadata = {
   title: "AirBnB Clone",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ClientOnly>
+          <ToastProvider />
           <RegisterModal />
           <Navbar />
         </ClientOnly>
