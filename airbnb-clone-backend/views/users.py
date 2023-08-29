@@ -15,4 +15,4 @@ def login():
     email = body.get("email")
     password = body.get("password")
     user = userController.getUser(email=email, password=password)
-    return {"user": dumps(user)}
+    return {"user": user}

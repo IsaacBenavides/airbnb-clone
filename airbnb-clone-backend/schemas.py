@@ -1,6 +1,3 @@
-import datetime
-
-
 user_schema = {
     "required": ["reservations", "createdAt"],
     "properties": {

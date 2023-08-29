@@ -1,17 +1,17 @@
 import os
-import base64
 from cryptography.fernet import Fernet
+from dotenv import load_dotenv
 
-print(os.getenv("encrypt_key"))
-
-
-def encrypt(value):
-    key = base64.urlsafe_b64encode(bytes(os.getenv("encrypt_key"), encoding="ascii"))
-    f = Fernet(key)
-    return f.encrypt(value.encode())
+load_dotenv()
 
 
-def decrypt(token):
-    key = base64.urlsafe_b64encode(bytes(os.getenv("encrypt_key"), encoding="ascii"))
-    f = Fernet(key)
-    return f.decrypt(bytes(token, "utf-8")).decode()
+class Encrypt:
+    def __init__(self) -> None:
+        key = os.getenv("encrypt_key")
+        self.f = Fernet(key)
+
+    def encrypt(self, value):
+        return str(self.f.encrypt(value.encode())).replace("b'", "'")
+
+    def decrypt(self, token):
+        return self.f.decrypt(bytes(token, "utf-8")).decode()

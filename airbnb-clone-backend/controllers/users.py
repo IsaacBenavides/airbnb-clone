@@ -1,13 +1,16 @@
+import json
 from exceptions import InvalidUsage
 from models.user import User
 from validations import validEmail
 from errors import INVALID_EMAIL, INVALID_PASSWORD
-from utils import encrypt, decrypt
+from utils import Encrypt
+from bson.json_util import dumps
 
 
 class UserController:
     def __init__(self) -> None:
         self.user = User()
+        self.encrypt = Encrypt()
 
     def getUser(self, email, password):
         if not email:
@@ -24,11 +27,24 @@ class UserController:
             raise InvalidUsage(
                 message="Invalid Email", error_code=INVALID_EMAIL, status_code=400
             )
+        user = self.user.find_unique(email=email)
+        if not user:
+            raise InvalidUsage(
+                message="Incorrect user Credentials",
+                error_code=INVALID_PASSWORD,
+                status_code=401,
+            )
 
-        print(encrypt(password))
-        # print(
-        #     decrypt(
-        #         "gAAAAABk7Nh2Jgp9yCHpoYhGIi9J3Npaax6h5RTgz4Xxru5DzdVghwLxpNL5C2UjGRwJRLOvX1a4jxvpoMgbGa8ikRAvw6S5Ow=="
-        #     )
-        # )
-        return self.user.find_unique(email=email)
+        user = dumps(user)
+        user = json.loads(user)
+        user_password = self.encrypt.decrypt(user["hashedPassword"])
+        isSamePassword = user_password == password
+
+        if not isSamePassword:
+            raise InvalidUsage(
+                message="Incorrect User Credentials",
+                error_code=INVALID_PASSWORD,
+                status_code=401,
+            )
+
+        return user
